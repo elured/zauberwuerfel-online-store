@@ -1,0 +1,36 @@
+<nav>
+    <div class="nav-wrapper">
+        <a href="#" class="brand-logo">Zauberwürfel Online-Store</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            {{#if isHome}}
+            <li class="active"><a href="/">Hauptseite</a></li>
+            {{else}}
+            <li><a href="/">Hauptseite</a></li>
+            {{/if}}
+
+            {{#if isCubes}}
+            <li class="active"><a href="/cubes">Zauberwürfel</a></li>
+            {{else}}
+            <li><a href="/cubes">Zauberwürfel</a></li>
+            {{/if}}
+
+            {{#if isCard}}
+            <li class="active"><a href="/card">Einkaufswagen</a></li>
+            {{else}}
+            <li><a href="/card">Einkaufswagen</a></li>
+            {{/if}}
+
+            {{#if isAdd}}
+            <li class="active"><a href="/add">Add Cube</a></li>
+            {{else}}
+            <li><a href="/add">Add Cube</a></li>
+            {{/if}}
+
+            {{#if isAbout}}
+            <li class="active"><a href="/about">Über uns</a></li>
+            {{else}}
+            <li><a href="/about">Über uns</a></li>
+            {{/if}}
+        </ul>
+    </div>
+</nav>

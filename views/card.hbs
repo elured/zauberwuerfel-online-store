@@ -1,0 +1,30 @@
+<h1>Einkaufswagen</h1>
+<div id="card">
+    {{#if cubes.length}}
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Anzahl</th>
+                <th>Handlungen</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {{#each cubes}}
+            <tr>
+                <td>{{title}}</td>
+                <td>{{count}}</td>
+                <td>
+                    <button class="btn btn-small js-remove" data-id="{{id}}">Löschen</button>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+    <p><strong>Preis: <span class="price">{{price}}</span></strong></p>
+    {{else}}
+    <p>Sie haben noch nichts in den Einkaufswagen hinzugefügt</p>
+    {{/if}}
+</div>

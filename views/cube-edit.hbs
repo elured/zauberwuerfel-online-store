@@ -1,0 +1,24 @@
+<h1>Zauberwürfel Überarbeiten</h1>
+<form action="/cubes/edit" method="POST">
+    <div class="input-field">
+        <input id="title" name="title" type="text" class="validate" required value="{{cube.title}}">
+        <label for="title">Name des Würfels</label>
+        <span class="helper-text" data-error="Geben Sie einen Namen ein"></span>
+    </div>
+
+    <div class="input-field">
+        <input id="price" name="price" type="number" class="validate" required min="5" value="{{cube.price}}">
+        <label for="price">Preis des Würfels</label>
+        <span class="helper-text" data-error="Geben Sie einen Preis ein"></span>
+    </div>
+
+    <div class="input-field">
+        <input id="img" name="img" type="text" class="validate" required value="{{cube.img}}">
+        <label for="img">URL des Bildes</label>
+        <span class="helper-text" data-error="Geben Sie einen URL des Bildes ein"></span>
+    </div>
+
+    <input type="hidden" name="id" value={{cube.id}}>
+
+    <button class="btn btn-primary">Überarbeiten</button>
+</form>
