@@ -1,5 +1,5 @@
 <h1>Zauberwürfel Überarbeiten</h1>
-<form action="/cubes/edit" method="POST">
+<form action="/cubes/edit" method="POST" class="cube-form">
     <div class="input-field">
         <input id="title" name="title" type="text" class="validate" required value="{{cube.title}}">
         <label for="title">Name des Würfels</label>
@@ -20,5 +20,10 @@
 
     <input type="hidden" name="id" value={{cube.id}}>
 
-    <button class="btn btn-primary">Überarbeiten</button>
+    <button type="submit" class="btn btn-primary">Überarbeiten</button>
+</form>
+
+<form action="/cubes/remove" method="POST">
+    <input type="hidden" name="id" value={{ cube.id}}>
+    <button class="btn red">Cube löschen</button>
 </form>

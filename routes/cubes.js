@@ -3,7 +3,8 @@ const Cube = require('../models/cube')
 const router = Router()
 
 router.get('/', async (req, res) => {
-    const cubes = await Cube.getAll()
+    const cubes = await Cube.find().populate('userId', 'email name')
+    console.log(cubes)
     res.render('cubes',
         {
             title: 'Alle Zauberwürfel',
@@ -13,7 +14,7 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/:id', async (req, res) => {
-    const cube = await Cube.getById(req.params.id)
+    const cube = await Cube.findById(req.params.id)
     res.render('cube', {
         layout: 'empty',
         title: `Zauberwürfel ${cube.title}`,
@@ -26,7 +27,7 @@ router.get('/:id/edit', async (req, res) => {
         return res.redirect('/')
     }
 
-    const cube = await Cube.getById(req.params.id)
+    const cube = await Cube.findById(req.params.id)
 
     res.render('cube-edit', {
         title: `Überarbeiten ${cube.title}`,
@@ -34,8 +35,19 @@ router.get('/:id/edit', async (req, res) => {
     })
 })
 
+router.post('/remove', async (req, res) => {
+    try {
+        await Cube.deleteOne({ _id: req.body.id })
+        res.redirect('/cubes')
+    } catch (err) {
+        console.log(err)
+    }
+})
+
 router.post('/edit', async (req, res) => {
-    await Cube.update(req.body)
+    const { id } = req.body
+    delete req.body.id
+    await Cube.findByIdAndUpdate(id, req.body)
     res.redirect('/cubes')
 })
 

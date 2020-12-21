@@ -12,9 +12,20 @@ router.get('/', (req, res) => {
 
 router.post('/', async (req, res) => {
 
-    const cube = new Cube(req.body.title, req.body.price, req.body.img)
-    await cube.save()
-    res.redirect('/cubes')
+    const cube = new Cube({
+        title: req.body.title,
+        price: req.body.price,
+        img: req.body.img,
+        userId: req.user//._id
+    })
+    console.log(cube)
+    try {
+        await cube.save()
+        res.redirect('/cubes')
+    } catch (err) {
+        console.log(err)
+    }
 })
 
 module.exports = router
+//https://images-na.ssl-images-amazon.com/images/I/41KTj4TgWPL._SCLZZZZZZZ__.jpg

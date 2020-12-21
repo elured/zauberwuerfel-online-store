@@ -10,15 +10,30 @@ const cubesRoutes = require('./routes/cubes')
 const aboutRoutes = require('./routes/about')
 const cardRoutes = require('./routes/card')
 const mongoose = require('mongoose')
+const User = require('./models/user')
 
 const hbs = exphbs.create({
     defaultLayout: 'main',
-    extname: 'hbs'
+    extname: 'hbs',
+    runtimeOptions: {
+        allowProtoPropertiesByDefault: true,
+        allowProtoMethodsByDefault: true
+    }
 })
 
 app.engine('hbs', hbs.engine)
 app.set('view engine', 'hbs')
 app.set('views', 'views')
+
+app.use(async (req, res, next) => {
+    try {
+        const user = await User.findById('5fdfdb621c849d4ba8cd9c72')
+        req.user = user
+        next()
+    } catch (err) {
+        console.log(err)
+    }
+})
 
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({ extended: true }))
@@ -34,9 +49,23 @@ const PORT = process.env.PORT || 3000
 async function start() {
 
     try {
-        const url = `mongodb+srv://koleso:123456789@zwoscluster.aljnm.mongodb.net/<dbname>?retryWrites=true&w=majority`
-        await mongoose.connect(url, { useNewUrlParser: true })
+        const url = `mongodb+srv://koleso:AtWc8T8zkNtQ83N@zwoscluster.aljnm.mongodb.net/ZwosDb`
 
+        await mongoose.connect(url, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            useFindAndModify: false
+        })
+
+        const candidat = await User.findOne()
+        if (!candidat) {
+            const user = new User({
+                email: 'elured@bigmir.net',
+                name: 'Koleso',
+                cart: { items: [] }
+            })
+            await user.save()
+        }
         app.listen(PORT, () => {
             console.log(`Server is running on port ${PORT}`)
         })
