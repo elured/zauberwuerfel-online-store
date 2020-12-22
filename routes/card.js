@@ -37,12 +37,17 @@ router.get('/', async (req, res) => {
 })
 
 router.delete('/remove/:id', async (req, res) => {
-    await req.user.removeFromCart(req.params.id)
-    const user = await req.user.populate('cart.items.cubeId').execPopulate()
-    const cubes = mapCartItems(user.cart)
-    const cart = { cubes, price: computePrice(cubes) }
+    try {
 
-    res.status(200).json(cart)
+        await req.user.removeFromCart(req.params.id)
+        const user = await req.user.populate('cart.items.cubeId').execPopulate()
+        const cubes = mapCartItems(user.cart)
+        const cart = { cubes, price: computePrice(cubes) }
+
+        res.status(200).json(cart)
+    } catch (err) {
+        console.log(err)
+    }
 })
 
 module.exports = router

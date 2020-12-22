@@ -54,7 +54,8 @@ userSchema.methods.removeFromCart = function (id) {
     } else {
         items[index].count--
     }
-    this.items = { items }
+    this.cart = { items }
+
     return this.save()
 }
 
