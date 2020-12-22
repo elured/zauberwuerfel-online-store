@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose')
 
-const cube = new Schema({
+const cubeSchema = new Schema({
     title: {
         type: String,
         required: true
@@ -15,4 +15,12 @@ const cube = new Schema({
         ref: 'User'
     }
 })
-module.exports = model('Cube', cube)
+
+cubeSchema.method('toClient', function () {
+    const cube = this.toObject()
+
+    cube.id = cube._id
+    delete cube._id
+    return cube
+})
+module.exports = model('Cube', cubeSchema)

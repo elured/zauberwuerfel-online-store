@@ -7,6 +7,7 @@ const app = express()
 const homeRoutes = require('./routes/home')
 const addRoutes = require('./routes/add')
 const cubesRoutes = require('./routes/cubes')
+const ordersRoutes = require('./routes/orders')
 const aboutRoutes = require('./routes/about')
 const cardRoutes = require('./routes/card')
 const mongoose = require('mongoose')
@@ -27,7 +28,7 @@ app.set('views', 'views')
 
 app.use(async (req, res, next) => {
     try {
-        const user = await User.findById('5fdfdb621c849d4ba8cd9c72')
+        const user = await User.findById('5fe111ea84685b4c7b37e30d')
         req.user = user
         next()
     } catch (err) {
@@ -41,9 +42,9 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/', homeRoutes)
 app.use('/add', addRoutes)
 app.use('/cubes', cubesRoutes)
-app.use('/about', aboutRoutes)
 app.use('/card', cardRoutes)
-
+app.use('/orders', ordersRoutes)
+app.use('/about', aboutRoutes)
 const PORT = process.env.PORT || 3000
 
 async function start() {

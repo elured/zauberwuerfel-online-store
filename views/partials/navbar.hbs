@@ -19,11 +19,16 @@
             {{else}}
             <li><a href="/card">Einkaufswagen</a></li>
             {{/if}}
-
             {{#if isAdd}}
             <li class="active"><a href="/add">Add Cube</a></li>
             {{else}}
             <li><a href="/add">Add Cube</a></li>
+            {{/if}}
+
+            {{#if isOrder}}
+            <li class="active"><a href="/orders">Bestellungen</a></li>
+            {{else}}
+            <li><a href="/orders">Bestellungen</a></li>
             {{/if}}
 
             {{#if isAbout}}
