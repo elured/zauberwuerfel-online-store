@@ -1,8 +1,9 @@
 const { Router } = require('express')
 const Cube = require('../models/cube')
+const auth = require('../middleware/auth')
 const router = Router()
 
-router.get('/', (req, res) => {
+router.get('/', auth, (req, res) => {
     res.render('add',
         {
             title: 'Zauberwürfel hinzufügen',
@@ -10,7 +11,7 @@ router.get('/', (req, res) => {
         })
 })
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
 
     const cube = new Cube({
         title: req.body.title,

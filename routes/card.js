@@ -1,6 +1,7 @@
 const { Router } = require('express')
 const cube = require('../models/cube')
 const Cube = require('../models/cube')
+const auth = require('../middleware/auth')
 const router = Router()
 
 function mapCartItems(cart) {
@@ -17,13 +18,13 @@ function computePrice(cubes) {
     }, 0)
 }
 
-router.post('/add', async (req, res) => {
+router.post('/add', auth, async (req, res) => {
     const cube = await Cube.findById(req.body.id)
     await req.user.addToCart(cube)
     res.redirect('/card')
 })
 
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
     const user = await req.user.populate('cart.items.cubeId').execPopulate()
 
     const cubes = mapCartItems(user.cart)
@@ -36,7 +37,7 @@ router.get('/', async (req, res) => {
     })
 })
 
-router.delete('/remove/:id', async (req, res) => {
+router.delete('/remove/:id', auth, async (req, res) => {
     try {
 
         await req.user.removeFromCart(req.params.id)

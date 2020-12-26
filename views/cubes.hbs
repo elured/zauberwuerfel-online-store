@@ -12,11 +12,13 @@
             </div>
             <div class="card-action actions">
                 <a href="/cubes/{{id}}" target="_blank">Zum Zauberwürfel</a>
+                {{#if @root.isAuth}}
                 <a href="/cubes/{{id}}/edit?allow=true">Überarbeiten</a>
                 <form action="/card/add" method="POST">
                     <input type="hidden" name="id" value="{{id}}">
                     <button type="submit" class="btn btn-primary">Kaufen</button>
                 </form>
+                {{/if}}
             </div>
         </div>
     </div>
