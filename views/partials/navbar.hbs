@@ -14,11 +14,14 @@
             <li><a href="/cubes">Zauberwürfel</a></li>
             {{/if}}
 
+
+            {{#if isAuth}}
             {{#if isCard}}
             <li class="active"><a href="/card">Einkaufswagen</a></li>
             {{else}}
             <li><a href="/card">Einkaufswagen</a></li>
             {{/if}}
+
             {{#if isAdd}}
             <li class="active"><a href="/add">Add Cube</a></li>
             {{else}}
@@ -29,6 +32,16 @@
             <li class="active"><a href="/orders">Bestellungen</a></li>
             {{else}}
             <li><a href="/orders">Bestellungen</a></li>
+            {{/if}}
+            <li><a href="/auth/logout">Abmelden</a></li>
+
+            {{else}}
+
+            {{#if isLogin}}
+            <li class="active"><a href="/auth/login#login">Anmeldung</a></li>
+            {{else}}
+            <li><a href="/auth/login#login">Anmeldung</a></li>
+            {{/if}}
             {{/if}}
 
             {{#if isAbout}}

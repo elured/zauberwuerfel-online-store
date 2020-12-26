@@ -1,0 +1,52 @@
+<div class="auth">
+    <div class="row">
+        <div class="col s12">
+            <ul class="tabs">
+                <li class="tab col s6"><a class="active" href="#login">Anmeldung</a></li>
+                <li class="tab col s6"><a href="#register">Registrierung</a></li>
+            </ul>
+        </div>
+        <div id="login" class="col s6 offset-s3">
+            <h3>Anmeldung</h3>
+            <form action="/auth/login" method="POST">
+                <div class="input-field">
+                    <input id="email" name="email" type="email" class="validate" required>
+                    <label for="email">Email</label>
+                    <span class="helper-text" data-error="Geben Sie ein Email ein"></span>
+                </div>
+
+                <div class="input-field">
+                    <input id="password" name="password" type="password" class="validate" required>
+                    <label for="password">Kennwort</label>
+                    <span class="helper-text" data-error="Geben Sie ein Kennwort ein"></span>
+                </div>
+
+                <button class="btn btn-primary" type="submit">Anmelden</button>
+            </form>
+        </div>
+        <div id="register" class="col s6 offset-s3">
+            <h3>Konto erstellen</h3>
+            <form action="/auth/register" method="POST">
+                <div class="input-field">
+                    <input id="remail" name="email" type="email" class="validate" required>
+                    <label for="remail">Email</label>
+                    <span class="helper-text" data-error="Geben Sie ein Email ein"></span>
+                </div>
+
+                <div class="input-field">
+                    <input id="rpassword" name="password" type="password" class="validate" required>
+                    <label for="rpassword">Kennwort</label>
+                    <span class="helper-text" data-error="Geben Sie ein Kennwort ein"></span>
+                </div>
+
+                <div class="input-field">
+                    <input id="confirm" name="confirm" type="password" class="validate" required>
+                    <label for="confirm">Kennwort wiederholen</label>
+                    <span class="helper-text" data-error="Geben Sie ein Kennwort ein"></span>
+                </div>
+
+                <button class="btn btn-primary" type="submit">Registrieren</button>
+            </form>
+        </div>
+    </div>
+</div>
