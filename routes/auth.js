@@ -2,10 +2,13 @@ const { Router } = require('express')
 const router = Router()
 const User = require('../models/user')
 const bcrypt = require('bcryptjs')
+
 router.get('/login', async (req, res) => {
     res.render('auth/login', {
         ritle: 'Autorisierung',
-        isLogin: true
+        isLogin: true,
+        loginError: req.flash('loginError'),
+        registerError: req.flash('registerError')
     })
 })
 
@@ -29,9 +32,12 @@ router.post('/login', async (req, res) => {
                     res.redirect('/')
                 })
             } else {
+
+                req.flash('loginError', 'Kennwort ist falsch')
                 res.redirect('/auth/login#login')
             }
         } else {
+            req.flash('loginError', 'Benutzer mit dem eingegebenen E-Mail existiert nicht')
             res.redirect('/auth/login#login')
         }
 
@@ -53,6 +59,7 @@ router.post('/register', async (req, res) => {
         const candidate = await User.findOne({ email })
 
         if (candidate) {
+            req.flash('registerError', 'Benutzer mit dem eingegebenen E-Mail existiert schon')
             res.redirect('/auth/login#register')
         } else {
             const hashPassword = await bcrypt.hash(password, 10)

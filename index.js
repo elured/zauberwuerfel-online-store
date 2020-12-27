@@ -3,6 +3,8 @@ const path = require('path')
 const exphbs = require('express-handlebars')
 const session = require('express-session')
 const MongoStore = require('connect-mongodb-session')(session)
+const csurf = require('csurf')
+const flash = require('connect-flash')
 const homeRoutes = require('./routes/home')
 const addRoutes = require('./routes/add')
 const cubesRoutes = require('./routes/cubes')
@@ -11,7 +13,6 @@ const uathRoutes = require('./routes/auth')
 const aboutRoutes = require('./routes/about')
 const cardRoutes = require('./routes/card')
 const mongoose = require('mongoose')
-const User = require('./models/user')
 const varMiddleware = require('./middleware/variables')
 const userMiddleware = require('./middleware/user')
 
@@ -44,8 +45,11 @@ app.use(session({
     saveUninitialized: false,
     store
 }))
+app.use(csurf())
+app.use(flash())
 app.use(varMiddleware)
 app.use(userMiddleware)
+
 
 app.use('/', homeRoutes)
 app.use('/add', addRoutes)

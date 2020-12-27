@@ -5,7 +5,7 @@ const router = Router()
 
 router.get('/', async (req, res) => {
     const cubes = await Cube.find().populate('userId', 'email name')
-    console.log(cubes)
+
     res.render('cubes',
         {
             title: 'Alle Zauberwürfel',

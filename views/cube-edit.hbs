@@ -19,11 +19,13 @@
     </div>
 
     <input type="hidden" name="id" value={{cube.id}}>
+    <input type="hidden" name="_csrf" value="{{csrf}}">
 
     <button type="submit" class="btn btn-primary">Überarbeiten</button>
 </form>
 
 <form action="/cubes/remove" method="POST">
     <input type="hidden" name="id" value={{ cube.id}}>
+    <input type="hidden" name="_csrf" value="{{csrf}}">
     <button class="btn red">Cube löschen</button>
 </form>
