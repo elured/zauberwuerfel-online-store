@@ -24,7 +24,8 @@ const hbs = exphbs.create({
     runtimeOptions: {
         allowProtoPropertiesByDefault: true,
         allowProtoMethodsByDefault: true
-    }
+    },
+    helpers: require('./utils/hbs-helpers')
 })
 
 app.engine('hbs', hbs.engine)

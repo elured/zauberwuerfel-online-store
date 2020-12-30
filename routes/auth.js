@@ -80,7 +80,7 @@ router.post('/register', async (req, res) => {
             res.redirect('/auth/login#login')
             const regEmailObjct = regEmail(email)
             console.log(regEmailObjct)
-            await transporter.sendMail(regEmailObjct)
+            //await transporter.sendMail(regEmailObjct)
             // sgMail
             //     .send(regEmailObjct)
             //     .then(() => {

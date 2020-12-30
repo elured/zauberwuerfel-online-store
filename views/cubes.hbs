@@ -13,7 +13,11 @@
             <div class="card-action actions">
                 <a href="/cubes/{{id}}" target="_blank">Zum Zauberwürfel</a>
                 {{#if @root.isAuth}}
+
+                {{#ifeq userId._id @root.userId}}
                 <a href="/cubes/{{id}}/edit?allow=true">Überarbeiten</a>
+                {{/ifeq}}
+
                 <form action="/card/add" method="POST">
                     <input type="hidden" name="id" value="{{id}}">
                     <input type="hidden" name="_csrf" value="{{@root.csrf}}">
