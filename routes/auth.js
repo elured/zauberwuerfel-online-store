@@ -2,11 +2,13 @@ const { Router } = require('express')
 const router = Router()
 const User = require('../models/user')
 const bcrypt = require('bcryptjs')
+const { validationResult } = require('express-validator')
 const nodemailer = require('nodemailer')
 const sendgrid = require('nodemailer-sendgrid-transport')
 const keys = require('../keys')
 const regEmail = require('../emails/registration')
 const sgMail = require('@sendgrid/mail')
+const { registerValidators } = require('../utils/validators')
 
 const transporter = nodemailer.createTransport(sendgrid({
     auth: { api_key: keys.SENDGRID_API_KEY }
@@ -63,34 +65,32 @@ router.get('/logout', async (req, res) => {
     })
 })
 
-router.post('/register', async (req, res) => {
+router.post('/register', registerValidators, async (req, res) => {
     try {
-        const { email, password, repeat, name } = req.body
-        const candidate = await User.findOne({ email })
-
-        if (candidate) {
-            req.flash('registerError', 'Benutzer mit dem eingegebenen E-Mail existiert schon')
-            res.redirect('/auth/login#register')
-        } else {
-            const hashPassword = await bcrypt.hash(password, 10)
-            const user = new User({
-                email, name, password: hashPassword, cart: { items: [] }
-            })
-            await user.save()
-            res.redirect('/auth/login#login')
-            const regEmailObjct = regEmail(email)
-            console.log(regEmailObjct)
-            //await transporter.sendMail(regEmailObjct)
-            // sgMail
-            //     .send(regEmailObjct)
-            //     .then(() => {
-            //         console.log('Email sent')
-            //     })
-            //     .catch((error) => {
-            //         console.error(error)
-            //     })
-
+        const { email, password, name } = req.body
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            req.flash('registerError', errors.array()[0].msg)
+            return res.status(422).redirect('/auth/login#register')
         }
+
+        const hashPassword = await bcrypt.hash(password, 10)
+        const user = new User({
+            email, name, password: hashPassword, cart: { items: [] }
+        })
+        await user.save()
+        res.redirect('/auth/login#login')
+        const regEmailObjct = regEmail(email)
+        console.log(regEmailObjct)
+        //await transporter.sendMail(regEmailObjct)
+        // sgMail
+        //     .send(regEmailObjct)
+        //     .then(() => {
+        //         console.log('Email sent')
+        //     })
+        //     .catch((error) => {
+        //         console.error(error)
+        //     })
 
     } catch (err) {
         console.log(err)
