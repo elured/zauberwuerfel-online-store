@@ -2,6 +2,8 @@ const { Router } = require('express')
 const Cube = require('../models/cube')
 const auth = require('../middleware/auth')
 const router = Router()
+const { validationResult } = require('express-validator')
+const { courseValidators } = require('../utils/validators')
 
 function isOwner(cube, req) {
     return cube.userId.toString() === req.user._id.toString()
@@ -73,9 +75,15 @@ router.post('/remove', auth, async (req, res) => {
     }
 })
 
-router.post('/edit', auth, async (req, res) => {
+router.post('/edit', auth, courseValidators, async (req, res) => {
     try {
+        const errors = validationResult(req)
         const { id } = req.body
+
+        if (!errors.isEmpty()) {
+            return res.status(422).render(`/cubes/${id}/edit?allow=true`)
+        }
+
         delete req.body.id
         const cube = await Cube.findById(id)
         if (!isOwner(cube, req)) {

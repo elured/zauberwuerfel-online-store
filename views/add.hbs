@@ -1,19 +1,23 @@
 <h1>Zauberwürfel hinzufügen</h1>
+{{#if error}}
+<p class="alert">{{error}}</p>
+{{/if}}
+
 <form action="/add" method="POST">
     <div class="input-field">
-        <input id="title" name="title" type="text" class="validate" required>
+        <input id="title" name="title" type="text" class="validate" required value="{{data.title}}">
         <label for="title">Name des Würfels</label>
         <span class="helper-text" data-error="Geben Sie einen Namen ein"></span>
     </div>
 
     <div class="input-field">
-        <input id="price" name="price" type="number" class="validate" required min="5">
+        <input id="price" name="price" type="number" class="validate" required min="5" value="{{data.price}}">
         <label for="price">Preis des Würfels</label>
         <span class="helper-text" data-error="Geben Sie einen Preis ein"></span>
     </div>
 
     <div class="input-field">
-        <input id="img" name="img" type="text" class="validate" required>
+        <input id="img" name="img" type="text" class="validate" required value="{{data.img}}">
         <label for="img">URL des Bildes</label>
         <span class="helper-text" data-error="Geben Sie einen URL des Bildes ein"></span>
     </div>

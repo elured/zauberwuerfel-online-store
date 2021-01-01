@@ -1,6 +1,16 @@
 const { body } = require('express-validator')
 const User = require('../models/user')
 
+exports.loginValidators = [
+    body('email')
+        .isEmail()
+        .withMessage('Email ist inkorrekt'),
+    body('password', 'Kennwort muss von 6 bis 32 alphanumerischen Zeichen enthalten')
+        .isLength({ min: 6, max: 32 })
+        .isAlphanumeric()
+        .trim(),
+]
+
 exports.registerValidators = [
     body('email')
         .isEmail()
@@ -32,4 +42,10 @@ exports.registerValidators = [
         .isLength({ min: 3 })
         .withMessage('Der Name muss mindestens 3 Zeichen enthalten')
         .trim()
-]   
+]
+
+exports.courseValidators = [
+    body('title').isLength({ min: 3 }).withMessage('Der Name muss mindestens 3 Zeichen enthalten'),
+    body('price').isNumeric().withMessage('Der Preis ist nicht korrekt'),
+    body('img', "URL ist nicht korrekt").isURL()
+]
