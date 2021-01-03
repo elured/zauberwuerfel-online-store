@@ -10,12 +10,15 @@ const addRoutes = require('./routes/add')
 const cubesRoutes = require('./routes/cubes')
 const ordersRoutes = require('./routes/orders')
 const uathRoutes = require('./routes/auth')
+const profileRoutes = require('./routes/profile')
 const aboutRoutes = require('./routes/about')
 const cardRoutes = require('./routes/card')
 const mongoose = require('mongoose')
 const varMiddleware = require('./middleware/variables')
 const userMiddleware = require('./middleware/user')
+const fileMiddleware = require('./middleware/file')
 const keys = require('./keys')
+const errorHandler = require('./middleware/error')
 
 const app = express()
 const hbs = exphbs.create({
@@ -38,6 +41,7 @@ const store = new MongoStore({
 })
 
 app.use(express.static(path.join(__dirname, 'public')))
+app.use('/images', express.static(path.join(__dirname, 'images')))
 app.use(express.urlencoded({ extended: true }))
 app.use(session({
     secret: keys.SESSION_SECRET,
@@ -45,6 +49,7 @@ app.use(session({
     saveUninitialized: false,
     store
 }))
+app.use(fileMiddleware.single('avatar'))
 app.use(csurf())
 app.use(flash())
 app.use(varMiddleware)
@@ -58,6 +63,9 @@ app.use('/card', cardRoutes)
 app.use('/orders', ordersRoutes)
 app.use('/auth', uathRoutes)
 app.use('/about', aboutRoutes)
+app.use('/profile', profileRoutes)
+app.use(errorHandler)
+
 const PORT = process.env.PORT || 3000
 
 async function start() {

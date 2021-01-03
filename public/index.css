@@ -43,3 +43,7 @@
     background: rgba(235,0, 0, .3);
     color: red;
 }
+.avatar{
+    width: 100%;
+    height: auto;
+}
